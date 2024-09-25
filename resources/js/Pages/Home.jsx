@@ -38,9 +38,6 @@ function Home({ posts }) {
                             </span>
                         </div>
                         <p className="font-medium">{post.body}</p>
-                        {/* <Link href={`/posts/${post.id}`} className="text-link">
-                            Read more...
-                        </Link> */}
 
                         <Link
                             href={route("posts.show", post)}
@@ -58,9 +55,8 @@ function Home({ posts }) {
                             key={link.label}
                             href={link.url}
                             dangerouslySetInnerHTML={{ __html: link.label }}
-                            className={`p-1 mx-1 ${
-                                link.active ? "text-blue-500 font-bold" : ""
-                            }`}
+                            className={`p-1 mx-1 ${link.active ? "text-blue-500 font-bold" : ""
+                                }`}
                         />
                     ) : (
                         <span

@@ -35,7 +35,7 @@ class PostController extends Controller
             'body' => ['required']
         ]);
         Post::create($fields);
-        return redirect('/');
+        return redirect('/home');
     }
 
     /**
@@ -64,7 +64,7 @@ class PostController extends Controller
             'body' => ['required']
         ]);
         $post->update($fields);
-        return redirect('/')->with('success', 'Post Updated');
+        return redirect('/home')->with('success', 'Post Updated');
     }
 
     /**
@@ -74,6 +74,6 @@ class PostController extends Controller
     {
         $post->delete();
 
-        return redirect('/')->with('message', 'Post Deleted');
+        return redirect('/home')->with('message', 'Post Deleted');
     }
 }
