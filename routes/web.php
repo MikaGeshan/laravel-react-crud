@@ -25,17 +25,21 @@ Route::get('/', function () {
 
 Route::get('/home', [PostController::class, 'index'])->name('home');
 Route::resource('posts', PostController::class)->except('index');
-Route::get('/signup', function () {
-    return Inertia::render('Signup'); // Pastikan Anda memiliki komponen Inertia 'Signup'
-})->name('signup');
+
 
 // Rute GET untuk menampilkan halaman login
 Route::get('/login', function () {
-    return Inertia::render('Login'); // Pastikan Anda memiliki komponen Inertia 'Login'
+    return Inertia::render('Login');
 })->name('login');
 
 // Rute POST untuk memproses login
 Route::post('/login', [AuthController::class, 'login']);
 
+// Rute GET untuk menampilkan halaman logout
+Route::get('/signup', function () {
+    return Inertia::render('Signup');
+})->name('signup');
+
 Route::post('/signup', [AuthController::class, 'signup']);
 
+Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
