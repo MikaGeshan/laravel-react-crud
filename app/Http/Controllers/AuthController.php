@@ -13,7 +13,7 @@ class AuthController extends Controller
     /**
      * Proses login.
      */
-    public function login(Request $request) // Ubah nama metode dari store ke login
+    public function login(Request $request)
     {
         // Validasi input
         $request->validate([
@@ -28,12 +28,14 @@ class AuthController extends Controller
             // Regenerasi sesi untuk keamanan
             $request->session()->regenerate();
 
-            // Kembalikan respons JSON
-            return response()->json(['success' => true, 'message' => 'Login berhasil!']);
+            // Redirect ke halaman home
+            return redirect()->intended('/home')->with('success', 'Login berhasil!');
         }
 
         // Jika kredensial tidak sesuai
-        return response()->json(['success' => false, 'message' => 'Kredensial yang diberikan tidak cocok dengan data kami.'], 401);
+        return back()->withErrors([
+            'email' => 'Email belum terdaftar.',
+        ])->withInput();
     }
 
     /**
