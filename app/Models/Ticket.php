@@ -22,7 +22,6 @@ class Ticket extends Model
         'destination',
         'seat_class',
         'price',
-        'ticket_file',
     ];
 
     /**

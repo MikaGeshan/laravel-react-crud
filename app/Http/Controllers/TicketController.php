@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Storage;
 
 class TicketController extends Controller
 {
@@ -23,7 +22,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Tickets/CreateTicket');
+        return Inertia::render('CreateTicket');
     }
 
     /**
@@ -42,19 +41,11 @@ class TicketController extends Controller
             'destination' => ['required', 'string', 'max:255'], // Destination
             'seat_class' => ['required', 'in:economy,business,first'], // Seat class
             'price' => ['required', 'numeric', 'min:0'], // Price must be a valid number and not negative
-            'ticket_file' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png'], // Ticket file (PDF, JPG, JPEG, PNG)
         ]);
 
         try {
             // Create a new airplane ticket
             $ticket = Ticket::create($fields);
-
-            // Upload the ticket file
-            $file = $request->file('ticket_file');
-            $filepath = Storage::putFile('tickets', $file);
-
-            // Update the ticket with the uploaded file
-            $ticket->update(['ticket_file' => $filepath]);
 
             // Return JSON response
             return response()->json([
@@ -101,21 +92,11 @@ class TicketController extends Controller
             'destination' => ['required', 'string', 'max:255'], // Destination
             'seat_class' => ['required', 'in:economy,business,first'],
             'price' => ['required', 'numeric', 'min:0'], // Price must be a valid number
-            'ticket_file' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png'], // Ticket file (PDF, JPG, JPEG, PNG)
         ]);
 
         try {
             // Update the airplane ticket
             $ticket->update($fields);
-
-            // Check if a new ticket file is uploaded
-            if ($request->hasFile('ticket_file')) {
-                $file = $request->file('ticket_file');
-                $filepath = Storage::putFile('tickets', $file);
-
-                // Update the ticket with the new uploaded file
-                $ticket->update(['ticket_file' => $filepath]);
-            }
 
             return redirect('/tickets')->with('success', 'Airplane Ticket Updated');
         } catch (\Exception $e) {

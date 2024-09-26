@@ -12,23 +12,18 @@ class TicketForm extends Component {
             destination: '',
             departure_time: '',
             price: '',
-            ticket_file: null,
         };
     }
 
     handleChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === 'ticket_file') {
-            this.setState({ ticket_file: files[0] });
-        } else {
-            this.setState({ [name]: value });
-        }
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { flight_number, passenger_name, departure_date, seat_class, destination, departure_time, price, ticket_file } = this.state;
-        this.props.onSubmit({ flight_number, passenger_name, departure_date, seat_class, destination, departure_time, price, ticket_file });
+        const { flight_number, passenger_name, departure_date, seat_class, destination, departure_time, price } = this.state;
+        this.props.onSubmit({ flight_number, passenger_name, departure_date, seat_class, destination, departure_time, price });
     };
 
     render() {
@@ -160,22 +155,6 @@ class TicketForm extends Component {
                     {errors.price && <p className="text-red-500 text-xs italic">{errors.price}</p>}
                 </div>
 
-                {/* Ticket File */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="ticket_file">
-                        Ticket File
-                    </label>
-                    <input
-                        id="ticket_file"
-                        name="ticket_file"
-                        type="file"
-                        onChange={this.handleChange}
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.ticket_file ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.ticket_file && <p className="text-red-500 text-xs italic">{errors.ticket_file}</p>}
-                </div>
-
                 {/* Submit Button */}
                 <div className="flex items-center justify-between">
                     <button
@@ -201,15 +180,10 @@ export default function CreateTicket() {
         destination: '',
         departure_time: '',
         price: '',
-        ticket_file: null, // Add ticket_file to form data
     });
 
     const handleSubmit = (ticketData) => {
-        const formData = new FormData();
-        for (const key in ticketData) {
-            formData.append(key, ticketData[key]);
-        }
-        post('/tickets', { data: formData, headers: { 'Content-Type': 'multipart/form-data' } });
+        post('/tickets', { data: ticketData });
     };
 
     return (

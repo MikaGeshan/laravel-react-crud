@@ -3,7 +3,7 @@ import { Link } from "@inertiajs/react";
 import { MdHome, MdFlight, MdAirplaneTicket, MdPeople, MdAirlineSeatReclineNormal, MdSettings, MdExpandMore, MdExpandLess } from "react-icons/md";
 
 export default function Sidebar() {
-    const [isTicketsOpen, setIsTicketsOpen] = useState(false); // State untuk mengelola dropdown tiket
+    const [isTicketsOpen, setIsTicketsOpen] = useState(false);
 
     const toggleTicketsDropdown = () => {
         setIsTicketsOpen(!isTicketsOpen);
