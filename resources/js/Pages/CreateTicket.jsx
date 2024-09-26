@@ -1,198 +1,186 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useForm } from '@inertiajs/react';
-
-class TicketForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            flight_number: '',
-            passenger_name: '',
-            departure_date: '',
-            seat_class: 'economy',
-            destination: '',
-            departure_time: '',
-            price: '',
-        };
-    }
-
-    handleChange = (e) => {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
-    };
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const { flight_number, passenger_name, departure_date, seat_class, destination, departure_time, price } = this.state;
-        this.props.onSubmit({ flight_number, passenger_name, departure_date, seat_class, destination, departure_time, price });
-    };
-
-    render() {
-        const { flight_number, passenger_name, departure_date, seat_class, destination, departure_time, price } = this.state;
-        const { processing, errors } = this.props;
-
-        return (
-            <form onSubmit={this.handleSubmit} className="max-w-md mx-auto bg-white p-6 shadow-md rounded">
-                <h1 className="text-2xl font-bold mb-4">Create Airplane Ticket</h1>
-
-                {/* Flight Number */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="flight_number">
-                        Flight Number
-                    </label>
-                    <input
-                        id="flight_number"
-                        name="flight_number"
-                        type="text"
-                        value={flight_number}
-                        onChange={this.handleChange}
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.flight_number ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.flight_number && <p className="text-red-500 text-xs italic">{errors.flight_number}</p>}
-                </div>
-
-                {/* Passenger Name */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="passenger_name">
-                        Passenger Name
-                    </label>
-                    <input
-                        id="passenger_name"
-                        name="passenger_name"
-                        type="text"
-                        value={passenger_name}
-                        onChange={this.handleChange}
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.passenger_name ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.passenger_name && <p className="text-red-500 text-xs italic">{errors.passenger_name}</p>}
-                </div>
-
-                {/* Departure Date */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="departure_date">
-                        Departure Date
-                    </label>
-                    <input
-                        id="departure_date"
-                        name="departure_date"
-                        type="date"
-                        value={departure_date}
-                        onChange={this.handleChange}
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.departure_date ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.departure_date && <p className="text-red-500 text-xs italic">{errors.departure_date}</p>}
-                </div>
-
-                {/* Seat Class */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="seat_class">
-                        Seat Class
-                    </label>
-                    <select
-                        id="seat_class"
-                        name="seat_class"
-                        value={seat_class}
-                        onChange={this.handleChange}
-                        className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                    >
-                        <option value="economy">Economy</option>
-                        <option value="business">Business</option>
-                        <option value="first">First Class</option>
-                    </select>
-                </div>
-
-                {/* Destination */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="destination">
-                        Destination
-                    </label>
-                    <input
-                        id="destination"
-                        name="destination"
-                        type="text"
-                        value={destination}
-                        onChange={this.handleChange}
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.destination ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.destination && <p className="text-red-500 text-xs italic">{errors.destination}</p>}
-                </div>
-
-                {/* Time */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="departure_time">
-                        Time
-                    </label>
-                    <input
-                        id="departure_time"
-                        name="departure_time"
-                        type="time"
-                        value={departure_time}
-                        onChange={this.handleChange}
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.departure_time ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.departure_time && <p className="text-red-500 text-xs italic">{errors.departure_time}</p>}
-                </div>
-
-                {/* Price */}
-                <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
-                        Price (in Rupiah)
-                    </label>
-                    <input
-                        id="price"
-                        name="price"
-                        type="number"
-                        value={price}
-                        onChange={this.handleChange}
-                        placeholder="Enter price in Rupiah"
-                        className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.price ? 'border-red-500' : ''
-                            }`}
-                    />
-                    {errors.price && <p className="text-red-500 text-xs italic">{errors.price}</p>}
-                </div>
-
-                {/* Submit Button */}
-                <div className="flex items-center justify-between">
-                    <button
-                        type="submit"
-                        disabled={processing}
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${processing ? 'opacity-50 cursor-not-allowed' : ''
-                            }`}
-                    >
-                        {processing ? 'Creating...' : 'Create Ticket'}
-                    </button>
-                </div>
-            </form>
-        );
-    }
-}
 
 export default function CreateTicket() {
     const { data, setData, post, processing, errors } = useForm({
         flight_number: '',
         passenger_name: '',
         departure_date: '',
-        seat_class: 'economy',
-        destination: '',
         departure_time: '',
-        price: '',
+        destination: '',
+        seat_class: 'economy',
+        price: ''
     });
 
-    const handleSubmit = (ticketData) => {
-        post('/tickets', { data: ticketData });
+    const handleChange = (e) => {
+        setData(e.target.name, e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post('/tickets');
+    };
+
+    const formStyle = {
+        container: {
+            maxWidth: '600px',
+            margin: '50px auto',
+            padding: '20px',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#f9f9f9',
+        },
+        formGroup: {
+            marginBottom: '15px',
+        },
+        label: {
+            display: 'block',
+            marginBottom: '5px',
+            fontWeight: 'bold',
+        },
+        input: {
+            width: '100%',
+            padding: '8px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+        },
+        select: {
+            width: '100%',
+            padding: '8px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+        },
+        error: {
+            color: 'red',
+            fontSize: '12px',
+            marginTop: '5px',
+        },
+        button: {
+            padding: '10px 20px',
+            backgroundColor: '#007bff',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+        },
+        buttonDisabled: {
+            backgroundColor: '#ccc',
+        },
     };
 
     return (
-        <div>
-            <TicketForm
-                onSubmit={handleSubmit}
-                processing={processing}
-                errors={errors}
-            />
+        <div style={formStyle.container}>
+            <h1>Create Airplane Ticket</h1>
+            <form onSubmit={handleSubmit}>
+                {/* Flight Number */}
+                <div style={formStyle.formGroup}>
+                    <label style={formStyle.label}>Flight Number</label>
+                    <input
+                        type="text"
+                        name="flight_number"
+                        value={data.flight_number}
+                        onChange={handleChange}
+                        placeholder="Enter flight number"
+                        style={formStyle.input}
+                    />
+                    {errors.flight_number && <span style={formStyle.error}>{errors.flight_number}</span>}
+                </div>
+
+                {/* Passenger Name */}
+                <div style={formStyle.formGroup}>
+                    <label style={formStyle.label}>Passenger Name</label>
+                    <input
+                        type="text"
+                        name="passenger_name"
+                        value={data.passenger_name}
+                        onChange={handleChange}
+                        placeholder="Enter passenger name"
+                        style={formStyle.input}
+                    />
+                    {errors.passenger_name && <span style={formStyle.error}>{errors.passenger_name}</span>}
+                </div>
+
+                {/* Departure Date */}
+                <div style={formStyle.formGroup}>
+                    <label style={formStyle.label}>Departure Date</label>
+                    <input
+                        type="date"
+                        name="departure_date"
+                        value={data.departure_date}
+                        onChange={handleChange}
+                        style={formStyle.input}
+                    />
+                    {errors.departure_date && <span style={formStyle.error}>{errors.departure_date}</span>}
+                </div>
+
+                {/* Departure Time */}
+                <div style={formStyle.formGroup}>
+                    <label style={formStyle.label}>Departure Time</label>
+                    <input
+                        type="time"
+                        name="departure_time"
+                        value={data.departure_time}
+                        onChange={handleChange}
+                        style={formStyle.input}
+                    />
+                    {errors.departure_time && <span style={formStyle.error}>{errors.departure_time}</span>}
+                </div>
+
+                {/* Destination */}
+                <div style={formStyle.formGroup}>
+                    <label style={formStyle.label}>Destination</label>
+                    <input
+                        type="text"
+                        name="destination"
+                        value={data.destination}
+                        onChange={handleChange}
+                        placeholder="Enter destination"
+                        style={formStyle.input}
+                    />
+                    {errors.destination && <span style={formStyle.error}>{errors.destination}</span>}
+                </div>
+
+                {/* Seat Class */}
+                <div style={formStyle.formGroup}>
+                    <label style={formStyle.label}>Seat Class</label>
+                    <select
+                        name="seat_class"
+                        value={data.seat_class}
+                        onChange={handleChange}
+                        style={formStyle.select}
+                    >
+                        <option value="economy">Economy</option>
+                        <option value="business">Business</option>
+                        <option value="first">First</option>
+                    </select>
+                    {errors.seat_class && <span style={formStyle.error}>{errors.seat_class}</span>}
+                </div>
+
+                {/* Price */}
+                <div style={formStyle.formGroup}>
+                    <label style={formStyle.label}>Price</label>
+                    <input
+                        type="number"
+                        name="price"
+                        value={data.price}
+                        onChange={handleChange}
+                        placeholder="Enter price"
+                        style={formStyle.input}
+                    />
+                    {errors.price && <span style={formStyle.error}>{errors.price}</span>}
+                </div>
+
+                {/* Submit Button */}
+                <div style={formStyle.formGroup}>
+                    <button
+                        type="submit"
+                        style={{ ...formStyle.button, ...(processing ? formStyle.buttonDisabled : {}) }}
+                        disabled={processing}
+                    >
+                        {processing ? 'Creating...' : 'Create Ticket'}
+                    </button>
+                </div>
+            </form>
         </div>
     );
 }

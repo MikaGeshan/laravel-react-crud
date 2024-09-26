@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->string('flight_number');
+            $table->string('passenger_name');
+            $table->date('departure_date');
+            $table->time('departure_time');
+            $table->string('destination');
+            $table->string('seat_class');
+            $table->decimal('price', 8, 2); // 8 digits in total, 2 after the decimal point
             $table->timestamps();
         });
     }

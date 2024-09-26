@@ -57,3 +57,4 @@ Route::get('/tickets/create', [TicketController::class, 'create'])->name('ticket
 
 // Rute untuk menyimpan tiket baru
 Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
+
