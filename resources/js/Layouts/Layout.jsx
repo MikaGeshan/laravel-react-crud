@@ -26,7 +26,7 @@ export default function Layout({ children, layout = true }) {
                             href="/logout"
                             method="post"
                             as="button"
-                            className="flex items-center space-x-2 p-2 rounded hover:bg-gray-700 text-black"
+                            className="flex items-center space-x-2 p-2 rounded hover:bg-gray-200 text-black"
                         >
                             <MdExitToApp size={25} />
                             <span>Logout</span>

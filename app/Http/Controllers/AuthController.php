@@ -15,28 +15,36 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        // Coba login dengan kredensial yang diberikan
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            // Regenerasi sesi untuk keamanan
-            $request->session()->regenerate();
+        // Memvalidasi input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-            // Redirect ke halaman home
-            return redirect()->intended('/home')->with('success', 'Login berhasil!');
+        // Memeriksa apakah pengguna dengan email tersebut ada
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (!$user) {
+            // Jika email belum terdaftar
+            return back()->withErrors([
+                'email' => 'Email not registered.',
+            ])->withInput();
         }
 
-        // Jika kredensial tidak sesuai
-        return back()->withErrors([
-            'email' => 'Email belum terdaftar.',
-        ])->withInput();
+        // Memeriksa apakah password sesuai
+        if (!Auth::attempt($credentials)) {
+            // Jika password salah
+            return back()->withErrors([
+                'password' => 'Wrong password.',
+            ])->withInput();
+        }
+
+        // Jika berhasil login, redirect ke halaman home
+        return redirect()->route('home');
     }
+
 
     /**
      * Proses sign up.

@@ -16,7 +16,8 @@ function Login() {
         <>
             <div className="min-h-screen flex items-center justify-center bg-gray-100">
                 <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
-                    <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+                    <h1 className="text-2xl font-bold text-center">Login</h1>
+                    <h1 className="mb-6 text-center text-sm text-gray-500">Login to your existing account</h1>
                     {errors.message && (
                         <div className="bg-rose-500 text-white p-2 rounded-md mb-4 text-center">
                             {errors.message}

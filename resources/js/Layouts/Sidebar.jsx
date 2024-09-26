@@ -1,14 +1,21 @@
+import { useState } from "react";
 import { Link } from "@inertiajs/react";
-import { MdHome, MdFlight, MdAirplaneTicket, MdPeople, MdAirlineSeatReclineNormal, MdSettings } from "react-icons/md"; // Import ikon dari Material Icons
+import { MdHome, MdFlight, MdAirplaneTicket, MdPeople, MdAirlineSeatReclineNormal, MdSettings, MdExpandMore, MdExpandLess } from "react-icons/md";
 
 export default function Sidebar() {
+    const [isTicketsOpen, setIsTicketsOpen] = useState(false); // State untuk mengelola dropdown tiket
+
+    const toggleTicketsDropdown = () => {
+        setIsTicketsOpen(!isTicketsOpen);
+    };
+
     return (
         <div className="h-screen bg-gray-800 text-white w-60 flex flex-col">
             <div className="p-2 text-2xl font-bold border-b border-gray-700">
                 Dashboard
             </div>
             <nav className="flex-1 p-4">
-                <ul className="space-y-4"> {/* Menambahkan space-y-4 untuk jarak antar item */}
+                <ul className="space-y-4">
                     <li>
                         <Link
                             href="/home"
@@ -20,7 +27,7 @@ export default function Sidebar() {
                     </li>
                     <li>
                         <Link
-                            href="/posts/create"
+                            href="/flights"
                             className="flex items-center p-2 rounded hover:bg-gray-700"
                         >
                             <MdFlight className="mr-2" size={20} />
@@ -28,13 +35,36 @@ export default function Sidebar() {
                         </Link>
                     </li>
                     <li>
-                        <Link
-                            href="/tickets"
-                            className="flex items-center p-2 rounded hover:bg-gray-700"
+                        <div
+                            className="flex items-center p-2 rounded hover:bg-gray-700 cursor-pointer"
+                            onClick={toggleTicketsDropdown}
                         >
                             <MdAirplaneTicket className="mr-2" size={20} />
                             Tickets
-                        </Link>
+                            {isTicketsOpen ? <MdExpandLess className="ml-auto" /> : <MdExpandMore className="ml-auto" />}
+                        </div>
+                        <div
+                            className={`transition-all duration-300 ease-in-out overflow-hidden ${isTicketsOpen ? 'max-h-40' : 'max-h-0'}`}
+                        >
+                            <ul className="ml-8 mt-2 space-y-2">
+                                <li>
+                                    <Link
+                                        href="/tickets"
+                                        className="block p-2 rounded hover:bg-gray-700"
+                                    >
+                                        View Tickets
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/tickets/create"
+                                        className="block p-2 rounded hover:bg-gray-700"
+                                    >
+                                        Create Ticket
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li>
                         <Link
