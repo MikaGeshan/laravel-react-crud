@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('airlines', function (Blueprint $table) {
             $table->id();
+            $table->string('name'); // Airline name column
+            $table->string('code'); // Airline code column
+            $table->string('logo_url')->nullable(); // Airline logo URL (optional)
             $table->timestamps();
         });
     }

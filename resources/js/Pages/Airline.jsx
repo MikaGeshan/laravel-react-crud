@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useForm } from '@inertiajs/react';
 
-export default function Airline() {
-    const [airlines, setAirlines] = useState([
-        { name: "Garuda Indonesia", code: "GA", logo: "" },
-        { name: "Lion Air", code: "JT", logo: "" },
-        { name: "AirAsia", code: "AK", logo: "" },
-        { name: "Citilink", code: "QG", logo: "" },
-        { name: "Sriwijaya Air", code: "SJ", logo: "" }
-    ]);
+export default function Airline({ airlines: initialAirlines, flash }) {
+    const [airlines, setAirlines] = useState(initialAirlines);
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        code: '',
+        logo: null
+    });
 
-    const [newAirline, setNewAirline] = useState({ name: "", code: "", logo: "" });
-
-    const handleCreate = (e) => {
-        e.preventDefault();
-        console.log("Creating new airline:", newAirline); // Log data maskapai baru
-        if (newAirline.name && newAirline.code && newAirline.logo) {
-            setAirlines([...airlines, newAirline]);
-            setNewAirline({ name: "", code: "", logo: "" });
-            document.getElementById('create-form').style.display = 'none';
+    useEffect(() => {
+        if (flash.success) {
+            alert(flash.success);
         }
+        if (flash.error) {
+            alert(flash.error);
+        }
+    }, [flash]);
+
+    const handleChange = (e) => {
+        setData(e.target.name, e.target.type === 'file' ? e.target.files[0] : e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('name', data.name);
+        formData.append('code', data.code);
+        formData.append('logo', data.logo);
+
+        console.log('Submitting form data:', formData); // Tambahkan ini untuk debugging
+
+        post('/airlines', formData);
     };
 
     return (
@@ -34,10 +47,10 @@ export default function Airline() {
                     </tr>
                 </thead>
                 <tbody>
-                    {airlines.map((airline, index) => (
+                    {Array.isArray(airlines) && airlines.map((airline, index) => (
                         <tr key={index}>
                             <td className="table-data">
-                                <img src={airline.logo} alt={`${airline.name} logo`} className="airline-logo" />
+                                <img src={airline.logo_url} alt={`${airline.name} logo`} className="airline-logo" />
                             </td>
                             <td className="table-data">{airline.name}</td>
                             <td className="table-data">{airline.code}</td>
@@ -59,38 +72,49 @@ export default function Airline() {
             {/* Form for Creating New Airline */}
             <div id="create-form" className="form-container">
                 <h3 className="form-title">Create Airline</h3>
-                <form onSubmit={handleCreate} className="form">
+                <form onSubmit={handleSubmit} className="form">
                     <div className="form-group">
                         <label className="label">Name: </label>
                         <input
                             type="text"
-                            value={newAirline.name}
-                            onChange={(e) => setNewAirline({ ...newAirline, name: e.target.value })}
+                            name="name"
+                            value={data.name}
+                            onChange={handleChange}
                             required
                             className="input"
                         />
+                        {errors.name && <span className="error">{errors.name}</span>}
                     </div>
                     <div className="form-group">
                         <label className="label">Code: </label>
                         <input
                             type="text"
-                            value={newAirline.code}
-                            onChange={(e) => setNewAirline({ ...newAirline, code: e.target.value })}
+                            name="code"
+                            value={data.code}
+                            onChange={handleChange}
                             required
                             className="input"
                         />
+                        {errors.code && <span className="error">{errors.code}</span>}
                     </div>
                     <div className="form-group">
-                        <label className="label">Logo URL: </label>
+                        <label className="label">Logo: </label>
                         <input
                             type="file"
-                            value={newAirline.logo}
-                            onChange={(e) => setNewAirline({ ...newAirline, logo: e.target.value })}
+                            name="logo"
+                            onChange={handleChange}
                             required
                             className="input"
                         />
+                        {errors.logo && <span className="error">{errors.logo}</span>}
                     </div>
-                    <button type="submit" className="submit-button">Create</button>
+                    <button
+                        type="submit"
+                        className="submit-button"
+                        disabled={processing}
+                    >
+                        {processing ? 'Creating...' : 'Create'}
+                    </button>
                 </form>
             </div>
         </div>
