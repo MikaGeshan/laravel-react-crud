@@ -3,7 +3,6 @@ import { useForm } from '@inertiajs/react';
 
 export default function CreateTicket() {
     const { data, setData, post, processing, errors } = useForm({
-        flight_number: '',
         passenger_name: '',
         departure_date: '',
         departure_time: '',
@@ -72,20 +71,6 @@ export default function CreateTicket() {
         <div style={formStyle.container}>
             <h1>Create Airplane Ticket</h1>
             <form onSubmit={handleSubmit}>
-                {/* Flight Number */}
-                <div style={formStyle.formGroup}>
-                    <label style={formStyle.label}>Flight Number</label>
-                    <input
-                        type="text"
-                        name="flight_number"
-                        value={data.flight_number}
-                        onChange={handleChange}
-                        placeholder="Enter flight number"
-                        style={formStyle.input}
-                    />
-                    {errors.flight_number && <span style={formStyle.error}>{errors.flight_number}</span>}
-                </div>
-
                 {/* Passenger Name */}
                 <div style={formStyle.formGroup}>
                     <label style={formStyle.label}>Passenger Name</label>

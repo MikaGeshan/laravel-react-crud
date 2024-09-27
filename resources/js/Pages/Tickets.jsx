@@ -1,11 +1,21 @@
 import React from 'react';
-import { usePage } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
 import { format } from 'date-fns';
 
 export default function Tickets() {
-    const { tickets } = usePage().props; // Mengambil data tiket dari props
+    const { tickets } = usePage().props; // Get tickets from props
 
-    // Tambahkan pengecekan apakah tickets dan tickets.data ada
+    // Function to handle ticket deletion
+    const handleDelete = (id) => {
+        if (window.confirm("Are you sure you want to delete this ticket?")) {
+            router.delete(`/tickets/${id}`, {
+                onSuccess: () => alert('Ticket deleted successfully'),
+                onError: (error) => alert('Error deleting ticket: ' + error)
+            });
+        }
+    };
+
+    // Check if tickets exist
     if (!tickets || !tickets.data) {
         return <div>Loading tickets...</div>;
     }
@@ -14,7 +24,7 @@ export default function Tickets() {
         <div className="tickets-container">
             <h1>Flight Tickets</h1>
             <div className="ticket-list">
-                {tickets.data.map((ticket, index) => ( // Menggunakan data tiket dari props
+                {tickets.data.map((ticket, index) => (
                     <div key={index} className="ticket-card">
                         <div className="ticket-header">
                             <div className="ticket-destination">
@@ -37,6 +47,12 @@ export default function Tickets() {
                         </div>
                         <div className="ticket-footer">
                             <div className="ticket-barcode"></div>
+                            <button
+                                className="delete-button"
+                                onClick={() => handleDelete(ticket.id)}
+                            >
+                                Delete
+                            </button>
                         </div>
                     </div>
                 ))}

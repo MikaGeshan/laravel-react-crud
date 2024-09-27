@@ -34,7 +34,6 @@ class TicketController extends Controller
 
         // Validate airplane ticket data
         $fields = $request->validate([
-            'flight_number' => ['required', 'string', 'max:10'], // Flight number
             'passenger_name' => ['required', 'string', 'max:255'], // Passenger name
             'departure_date' => ['required', 'date'], // Departure date
             'departure_time' => ['required', 'date_format:H:i'], // Departure time (HH:MM format)
@@ -42,6 +41,9 @@ class TicketController extends Controller
             'seat_class' => ['required', 'in:economy,business,first'], // Seat class
             'price' => ['required', 'numeric', 'min:0'], // Price must be a valid number and not negative
         ]);
+
+        // Generate a random flight number
+        $fields['flight_number'] = $this->generateFlightNumber();
 
         try {
             // Create a new airplane ticket
@@ -108,5 +110,15 @@ class TicketController extends Controller
         $ticket->delete();
 
         return redirect()->route('tickets.index')->with('message', 'Airplane Ticket Deleted');
+    }
+
+    /**
+     * Generate a random flight number.
+     */
+    private function generateFlightNumber()
+    {
+        $prefix = 'FL';
+        $number = mt_rand(1000, 9999); // Generate a random number between 1000 and 9999
+        return $prefix . $number;
     }
 }

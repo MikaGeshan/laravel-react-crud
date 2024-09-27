@@ -56,3 +56,6 @@ Route::get('/tickets/create', [TicketController::class, 'create'])->name('ticket
 // Rute untuk menyimpan tiket baru
 Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store');
 
+// Rute untuk menghapus tiket
+Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+
