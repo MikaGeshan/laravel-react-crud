@@ -1,33 +1,19 @@
 import React from 'react';
+import { usePage } from '@inertiajs/react';
 
 export default function Tickets() {
-    // Contoh data tiket
-    const tickets = [
-        {
-            flight_number: 'GA123',
-            passenger_name: 'John Doe',
-            departure_date: '2024-10-05',
-            departure_time: '10:00 AM',
-            destination: 'Jakarta - Bali',
-            seat_class: 'Business',
-            price: '$500',
-        },
-        {
-            flight_number: 'SQ456',
-            passenger_name: 'Jane Smith',
-            departure_date: '2024-10-06',
-            departure_time: '02:30 PM',
-            destination: 'Singapore - Tokyo',
-            seat_class: 'Economy',
-            price: '$300',
-        },
-    ];
+    const { tickets } = usePage().props; // Mengambil data tiket dari props
+
+    // Tambahkan pengecekan apakah tickets dan tickets.data ada
+    if (!tickets || !tickets.data) {
+        return <div>Loading tickets...</div>;
+    }
 
     return (
         <div className="tickets-container">
             <h1>Flight Tickets</h1>
             <div className="ticket-list">
-                {tickets.map((ticket, index) => (
+                {tickets.data.map((ticket, index) => ( // Menggunakan data tiket dari props
                     <div key={index} className="ticket-card">
                         <div className="ticket-header">
                             <h2>{ticket.destination}</h2>

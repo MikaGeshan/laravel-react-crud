@@ -48,9 +48,7 @@ Route::get('/flights', function () {
     return Inertia::render('Flights');
 })->name('flights');
 
-Route::get('/tickets', function () {
-    return Inertia::render('Tickets');
-})->name('tickets');
+Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
 
 // Rute untuk menampilkan form pembuatan tiket
 Route::get('/tickets/create', [TicketController::class, 'create'])->name('tickets.create');

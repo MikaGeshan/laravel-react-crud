@@ -14,7 +14,7 @@ class TicketController extends Controller
     public function index()
     {
         $tickets = Ticket::latest()->paginate(10); // Display 10 latest tickets
-        return Inertia::render('Tickets/Index', ['tickets' => $tickets]);
+        return Inertia::render('Tickets', ['tickets' => $tickets]);
     }
 
     /**
