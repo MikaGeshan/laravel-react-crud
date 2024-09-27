@@ -136,7 +136,7 @@ export default function CreateTicket() {
                     >
                         <option value="economy">Economy</option>
                         <option value="business">Business</option>
-                        <option value="first">First</option>
+                        <option value="first">First Class</option>
                     </select>
                     {errors.seat_class && <span style={formStyle.error}>{errors.seat_class}</span>}
                 </div>

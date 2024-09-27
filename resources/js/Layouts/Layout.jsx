@@ -1,15 +1,8 @@
-import { Link, useForm } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import Sidebar from "./Sidebar";
 import { MdExitToApp } from "react-icons/md"; // Import ikon exit dari react-icons
 
 export default function Layout({ children, layout = true }) {
-    const { post } = useForm();
-
-    const handleLogout = (e) => {
-        e.preventDefault();
-        post('/logout');
-    };
-
     if (!layout) {
         return children;
     }

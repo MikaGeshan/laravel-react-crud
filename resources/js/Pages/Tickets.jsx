@@ -36,13 +36,15 @@ export default function Tickets() {
                         <div className="ticket-body">
                             <div className="ticket-info">
                                 <p><strong>Passenger</strong><br />{ticket.passenger_name}</p>
+                                <p><strong>Flight</strong><br />{ticket.flight_number}</p>
+                            </div>
+                            <div className="ticket-info">
+                                <p><strong>Seat Class</strong><br />{ticket.seat_class}</p>
                             </div>
                             <div className="ticket-info">
                                 <p><strong>Date</strong><br />{format(new Date(ticket.departure_date), 'dd MMM yyyy')}</p>
                                 <p><strong>Time</strong><br />{ticket.departure_time}</p>
-                            </div>
-                            <div className="ticket-info">
-                                <p><strong>Flight</strong><br />{ticket.flight_number}</p>
+
                             </div>
                         </div>
                         <div className="ticket-footer">

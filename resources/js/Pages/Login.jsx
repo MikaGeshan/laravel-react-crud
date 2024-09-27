@@ -9,7 +9,7 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post("/login"); // Mengirim data ke /login
+        post("/login");
     };
 
     return (
