@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\AirlineController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -48,6 +49,8 @@ Route::get('/flights', function () {
     return Inertia::render('Flights');
 })->name('flights');
 
+
+
 Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
 
 // Rute untuk menampilkan form pembuatan tiket
@@ -59,3 +62,9 @@ Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store
 // Rute untuk menghapus tiket
 Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
 
+Route::get('/airline', function () {
+    return Inertia::render('Airline');
+})->name('airline');
+
+
+Route::resource('airlines', AirlineController::class);

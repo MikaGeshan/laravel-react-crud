@@ -4,9 +4,14 @@ import { MdHome, MdFlight, MdAirplaneTicket, MdPeople, MdAirlineSeatReclineNorma
 
 export default function Sidebar() {
     const [isTicketsOpen, setIsTicketsOpen] = useState(false);
+    const [isFlightStatusOpen, setIsFlightStatusOpen] = useState(false);
 
     const toggleTicketsDropdown = () => {
         setIsTicketsOpen(!isTicketsOpen);
+    };
+
+    const toggleFlightStatusDropdown = () => {
+        setIsFlightStatusOpen(!isFlightStatusOpen);
     };
 
     return (
@@ -26,13 +31,36 @@ export default function Sidebar() {
                         </Link>
                     </li>
                     <li>
-                        <Link
-                            href="/flights"
-                            className="flex items-center p-2 rounded hover:bg-gray-700"
+                        <div
+                            className="flex items-center p-2 rounded hover:bg-gray-700 cursor-pointer"
+                            onClick={toggleFlightStatusDropdown}
                         >
                             <MdFlight className="mr-2" size={20} />
                             Flight Status
-                        </Link>
+                            {isFlightStatusOpen ? <MdExpandLess className="ml-auto" /> : <MdExpandMore className="ml-auto" />}
+                        </div>
+                        <div
+                            className={`transition-all duration-300 ease-in-out overflow-hidden ${isFlightStatusOpen ? 'max-h-40' : 'max-h-0'}`}
+                        >
+                            <ul className="ml-8 mt-2 space-y-2">
+                                <li>
+                                    <Link
+                                        href="/flights/status"
+                                        className="block p-2 rounded hover:bg-gray-700"
+                                    >
+                                        View Status
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/flights/schedule"
+                                        className="block p-2 rounded hover:bg-gray-700"
+                                    >
+                                        Flight Schedule
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <li>
                         <div
@@ -77,7 +105,7 @@ export default function Sidebar() {
                     </li>
                     <li>
                         <Link
-                            href="/service-providers"
+                            href="/airline"
                             className="flex items-center p-2 rounded hover:bg-gray-700"
                         >
                             <MdAirlineSeatReclineNormal className="mr-2" size={20} />
