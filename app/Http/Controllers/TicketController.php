@@ -47,16 +47,10 @@ class TicketController extends Controller
             // Create a new airplane ticket
             $ticket = Ticket::create($fields);
 
-            // Return JSON response
-            return response()->json([
-                'message' => 'Airplane Ticket Created',
-                'ticket' => $ticket
-            ]);
+            // Redirect to tickets page with success message
+            return redirect()->route('tickets.index')->with('success', 'Airplane Ticket Created');
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to create airplane ticket',
-                'message' => $e->getMessage()
-            ], 500);
+            return redirect()->route('tickets.index')->with('error', 'Failed to create airplane ticket: ' . $e->getMessage());
         }
     }
 
@@ -90,7 +84,7 @@ class TicketController extends Controller
             'departure_date' => ['required', 'date'],
             'departure_time' => ['required', 'date_format:H:i'], // Departure time (HH:MM format)
             'destination' => ['required', 'string', 'max:255'], // Destination
-            'seat_class' => ['required', 'in:economy,business,first'],
+            'seat_class' => ['required', 'in:economy,business,first-class'],
             'price' => ['required', 'numeric', 'min:0'], // Price must be a valid number
         ]);
 
@@ -98,12 +92,10 @@ class TicketController extends Controller
             // Update the airplane ticket
             $ticket->update($fields);
 
-            return redirect('/tickets')->with('success', 'Airplane Ticket Updated');
+            // Redirect to tickets page with success message
+            return redirect()->route('tickets.index')->with('success', 'Airplane Ticket Updated');
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to update airplane ticket',
-                'message' => $e->getMessage()
-            ], 500);
+            return redirect()->route('tickets.index')->with('error', 'Failed to update airplane ticket: ' . $e->getMessage());
         }
     }
 
@@ -115,6 +107,6 @@ class TicketController extends Controller
         // Delete the airplane ticket
         $ticket->delete();
 
-        return redirect('/tickets')->with('message', 'Airplane Ticket Deleted');
+        return redirect()->route('tickets.index')->with('message', 'Airplane Ticket Deleted');
     }
 }
