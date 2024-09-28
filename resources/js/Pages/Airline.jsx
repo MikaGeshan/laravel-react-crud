@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/react';
 
 export default function Airline({ airlines: initialAirlines, flash }) {
     const [airlines, setAirlines] = useState(initialAirlines);
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         code: '',
         logo: null
@@ -12,6 +12,7 @@ export default function Airline({ airlines: initialAirlines, flash }) {
     useEffect(() => {
         if (flash.success) {
             alert(flash.success);
+            reset(); // Reset form after successful submission
         }
         if (flash.error) {
             alert(flash.error);
@@ -28,8 +29,6 @@ export default function Airline({ airlines: initialAirlines, flash }) {
         formData.append('name', data.name);
         formData.append('code', data.code);
         formData.append('logo', data.logo);
-
-        console.log('Submitting form data:', formData); // Tambahkan ini untuk debugging
 
         post('/airlines', formData);
     };

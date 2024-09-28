@@ -20,11 +20,16 @@ class AirlineController extends Controller
                 'id' => $airline->id,
                 'name' => $airline->name,
                 'code' => $airline->code,
-                'logo_url' => $airline->logo_url, // Tambahkan ini
+                'logo_url' => $airline->logo_url ? Storage::url($airline->logo_url) : null,
             ];
         });
+
+        // Tambahkan log untuk debugging
+        Log::info('Airlines data:', $airlines->toArray());
+
         return Inertia::render('Airline', ['airlines' => $airlines]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -45,13 +50,13 @@ class AirlineController extends Controller
         }
 
         // Create a new airline record
-        Airline::create([
+        $airline = Airline::create([
             'name' => $request->name,
             'code' => $request->code,
             'logo_url' => $logoPath ?? null, // Save the logo path if exists
         ]);
 
-        return redirect()->back()->with('success', 'Airline created successfully.');
+        return response()->json(['success' => 'Airline created successfully.', 'airline' => $airline], 201);
     }
 
     /**
