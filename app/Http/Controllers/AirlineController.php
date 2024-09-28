@@ -24,9 +24,6 @@ class AirlineController extends Controller
             ];
         });
 
-        // Tambahkan log untuk debugging
-        Log::info('Airlines data:', $airlines->toArray());
-
         return Inertia::render('Airline', ['airlines' => $airlines]);
     }
 

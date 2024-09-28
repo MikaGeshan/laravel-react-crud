@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from '@inertiajs/react';
+import { useForm, Link } from '@inertiajs/react'; // Import Link for navigation and routing
 
 export default function Airline({ airlines: initialAirlines, flash }) {
-    const [airlines, setAirlines] = useState(initialAirlines);
+    const [airlines, setAirlines] = useState(initialAirlines || []);
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         code: '',
@@ -12,7 +12,7 @@ export default function Airline({ airlines: initialAirlines, flash }) {
     useEffect(() => {
         if (flash.success) {
             alert(flash.success);
-            reset(); // Reset form after successful submission
+            reset();
         }
         if (flash.error) {
             alert(flash.error);
@@ -29,13 +29,13 @@ export default function Airline({ airlines: initialAirlines, flash }) {
         formData.append('name', data.name);
         formData.append('code', data.code);
         formData.append('logo', data.logo);
-
         post('/airlines', formData);
     };
 
     return (
         <div className="container">
             <h1 className="title">Airline Lists</h1>
+
             {/* Airline Table */}
             <table className="table">
                 <thead>
@@ -43,6 +43,7 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                         <th className="table-header">Logo</th>
                         <th className="table-header">Name</th>
                         <th className="table-header">Code</th>
+                        <th className="table-header">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +54,16 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                             </td>
                             <td className="table-data">{airline.name}</td>
                             <td className="table-data">{airline.code}</td>
+                            <td className="table-data">
+                                <Link href={`/airlines/edit/${airline.id}`} className="bg-green-500 rounded-md text-sm px-2 py-1 text-white">
+                                    Update
+                                </Link>
+                                <form method="POST" action={`/airlines/delete/${airline.id}`} className="inline">
+                                    <button className="bg-red-500 rounded-md text-sm px-2 py-1 text-white">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

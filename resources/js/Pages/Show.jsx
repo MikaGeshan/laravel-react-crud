@@ -1,7 +1,7 @@
 import { Link, useForm } from "@inertiajs/react";
 import { route } from "../../../vendor/tightenco/ziggy/src/js";
 
-export default function Show({ post }) {
+export default function Show({ post, airlines }) { // Tambahkan airlines sebagai prop
     const { delete: destroy } = useForm();
 
     function submit(e) {
@@ -25,13 +25,6 @@ export default function Show({ post }) {
                         Delete
                     </button>
 
-                    {/* <Link
-                        href={`/posts/${post.id}/edit`}
-                        className="bg-green-500 rounded-md text-sm px-4 py-1 text-white"
-                    >
-                        Update
-                    </Link> */}
-
                     <Link
                         href={route("posts.edit", post)}
                         className="bg-green-500 rounded-md text-sm px-4 py-1 text-white"
@@ -40,6 +33,29 @@ export default function Show({ post }) {
                     </Link>
                 </form>
             </div>
+
+            {/* Tampilkan Data Airlines */}
+            <h2 className="title mt-4">Airlines</h2>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th className="table-header">Logo</th>
+                        <th className="table-header">Name</th>
+                        <th className="table-header">Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Array.isArray(airlines) && airlines.map((airline, index) => (
+                        <tr key={index}>
+                            <td className="table-data">
+                                <img src={airline.logo_url} alt={`${airline.name} logo`} className="airline-logo" />
+                            </td>
+                            <td className="table-data">{airline.name}</td>
+                            <td className="table-data">{airline.code}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </>
     );
 }

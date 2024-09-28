@@ -105,7 +105,7 @@ export default function Sidebar() {
                     </li>
                     <li>
                         <Link
-                            href="/airline"
+                            href="/airlines"
                             className="flex items-center p-2 rounded hover:bg-gray-700"
                         >
                             <MdAirlineSeatReclineNormal className="mr-2" size={20} />
