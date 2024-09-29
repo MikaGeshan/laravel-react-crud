@@ -23,7 +23,7 @@ class Airline extends Model
      */
     public function getLogoUrlAttribute()
     {
-        return $this->logo ? asset('storage/' . $this->logo) : null;
+        return $this->logo ? Storage::url($this->logo) : null;
     }
 
     /**

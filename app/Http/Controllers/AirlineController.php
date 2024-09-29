@@ -20,7 +20,7 @@ class AirlineController extends Controller
                 'id' => $airline->id,
                 'name' => $airline->name,
                 'code' => $airline->code,
-                'logo_url' => $airline->logo_url ? Storage::url($airline->logo_url) : null,
+                'logo_url' => $airline->logo_url ? Storage::url($airline->logo_url) : null, // Generate the public URL for the logo
             ];
         });
 
@@ -42,8 +42,14 @@ class AirlineController extends Controller
 
         // Handle file upload
         if ($request->hasFile('logo')) {
+            // Log the file details for debugging
+            Log::info('File upload detected: ' . $request->file('logo')->getClientOriginalName());
+
             // Store the uploaded logo
             $logoPath = $request->file('logo')->store('logos', 'public');
+            Log::info('File stored at: ' . $logoPath);
+        } else {
+            Log::info('No file uploaded.');
         }
 
         // Create a new airline record
@@ -53,8 +59,11 @@ class AirlineController extends Controller
             'logo_url' => $logoPath ?? null, // Save the logo path if exists
         ]);
 
+        Log::info('Airline created: ' . json_encode($airline));
+
         return response()->json(['success' => 'Airline created successfully.', 'airline' => $airline], 201);
     }
+
 
     /**
      * Display the specified resource.
@@ -105,8 +114,8 @@ class AirlineController extends Controller
     {
         try {
             // Delete logo file if exists
-            if ($airline->logo && Storage::disk('public')->exists($airline->logo)) {
-                Storage::disk('public')->delete($airline->logo);
+            if ($airline->logo_url && Storage::disk('public')->exists($airline->logo_url)) {
+                Storage::disk('public')->delete($airline->logo_url);
             }
 
             $airline->delete();

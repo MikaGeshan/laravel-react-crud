@@ -3,7 +3,7 @@ import { useForm, Link } from '@inertiajs/react'; // Import Link for navigation 
 
 export default function Airline({ airlines: initialAirlines, flash }) {
     const [airlines, setAirlines] = useState(initialAirlines || []);
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset, delete: destroy } = useForm({
         name: '',
         code: '',
         logo: null
@@ -32,6 +32,10 @@ export default function Airline({ airlines: initialAirlines, flash }) {
         post('/airlines', formData);
     };
 
+    const handleDelete = (id) => {
+        destroy(route('airlines.destroy', id));
+    };
+
     return (
         <div className="container">
             <h1 className="title">Airline Lists</h1>
@@ -58,11 +62,12 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                                 <Link href={`/airlines/edit/${airline.id}`} className="bg-green-500 rounded-md text-sm px-2 py-1 text-white">
                                     Update
                                 </Link>
-                                <form method="POST" action={`/airlines/delete/${airline.id}`} className="inline">
-                                    <button className="bg-red-500 rounded-md text-sm px-2 py-1 text-white">
-                                        Delete
-                                    </button>
-                                </form>
+                                <button
+                                    onClick={() => handleDelete(airline.id)}
+                                    className="bg-red-500 rounded-md text-sm px-2 py-1 text-white"
+                                >
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}

@@ -60,10 +60,10 @@ Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store
 // Rute untuk menghapus tiket
 Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
 
-Route::get('/airline', function () {
-    return Inertia::render('Airline');
-})->name('airline');
 
 // Rute resource untuk AirlineController
 Route::resource('airlines', AirlineController::class);
 Route::post('/airlines', [AirlineController::class, 'store']);
+
+// Route untuk menghapus airline
+Route::delete('/airlines/{airline}', [AirlineController::class, 'destroy'])->name('airlines.destroy');
