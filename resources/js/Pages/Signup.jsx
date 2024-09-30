@@ -70,7 +70,7 @@ function Signup() {
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-slate-500 text-white py-2 rounded-lg hover:bg-gray-300 transition duration-200"
+                            className="w-full bg-blue-900 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
                             disabled={processing}
                         >
                             {processing ? "Processing..." : "Sign Up"}
