@@ -67,3 +67,8 @@ Route::post('/airlines', [AirlineController::class, 'store']);
 
 // Route untuk menghapus airline
 Route::delete('/airlines/{airline}', [AirlineController::class, 'destroy'])->name('airlines.destroy');
+
+// Route untuk menampilkan halaman airports
+Route::get('/airports', function () {
+    return Inertia::render('Airports');
+})->name('airports');

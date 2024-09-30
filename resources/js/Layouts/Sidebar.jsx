@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@inertiajs/react";
-import { MdHome, MdFlight, MdAirplaneTicket, MdPeople, MdAirlineSeatReclineNormal, MdSettings, MdExpandMore, MdExpandLess } from "react-icons/md";
+import { MdHome, MdFlight, MdAirplaneTicket, MdPeople, MdAirlineSeatReclineNormal, MdSettings, MdExpandMore, MdExpandLess, MdConnectingAirports } from "react-icons/md";
 
 export default function Sidebar() {
     const [isTicketsOpen, setIsTicketsOpen] = useState(false);
@@ -45,15 +45,7 @@ export default function Sidebar() {
                             <ul className="ml-8 mt-2 space-y-2">
                                 <li>
                                     <Link
-                                        href="/flights/status"
-                                        className="block p-2 rounded hover:bg-gray-700"
-                                    >
-                                        View Status
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/flights/schedule"
+                                        href="/flights"
                                         className="block p-2 rounded hover:bg-gray-700"
                                     >
                                         Flight Schedule
@@ -61,6 +53,15 @@ export default function Sidebar() {
                                 </li>
                             </ul>
                         </div>
+                    </li>
+                    <li>
+                        <Link
+                            href="/airports"
+                            className="flex items-center p-2 rounded hover:bg-gray-700"
+                        >
+                            <MdConnectingAirports className="mr-2" size={20} />
+                            Airports
+                        </Link>
                     </li>
                     <li>
                         <div

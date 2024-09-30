@@ -86,7 +86,7 @@ class TicketController extends Controller
             'departure_date' => ['required', 'date'],
             'departure_time' => ['required', 'date_format:H:i'], // Departure time (HH:MM format)
             'destination' => ['required', 'string', 'max:255'], // Destination
-            'seat_class' => ['required', 'in:economy,business,first-class'],
+            'seat_class' => ['required', 'in:economy,business,first_class'],
             'price' => ['required', 'numeric', 'min:0'], // Price must be a valid number
         ]);
 

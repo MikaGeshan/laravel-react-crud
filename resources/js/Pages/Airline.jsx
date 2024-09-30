@@ -3,10 +3,11 @@ import { useForm, Link } from '@inertiajs/react'; // Import Link for navigation 
 
 export default function Airline({ airlines: initialAirlines, flash }) {
     const [airlines, setAirlines] = useState(initialAirlines || []);
-    const { data, setData, post, processing, errors, reset, delete: destroy } = useForm({
+    const [editingAirline, setEditingAirline] = useState(null); // State to track the airline being edited
+    const { data, setData, post, put, processing, errors, reset, delete: destroy } = useForm({
         name: '',
         code: '',
-        logo: null
+        logo: '',
     });
 
     useEffect(() => {
@@ -28,12 +29,24 @@ export default function Airline({ airlines: initialAirlines, flash }) {
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('code', data.code);
-        formData.append('logo', data.logo);
-        post('/airlines', formData);
+        if (data.logo) formData.append('logo', data.logo);
+
+        if (editingAirline) {
+            // Update existing airline
+            put(`/airlines/${editingAirline.id}`, formData);
+        }
     };
 
     const handleDelete = (id) => {
         destroy(route('airlines.destroy', id));
+    };
+
+    const handleEdit = (airline) => {
+        setEditingAirline(airline); // Set the airline to be edited
+        setData('name', airline.name);
+        setData('code', airline.code);
+        setData('logo', ''); // Reset logo input as it's file-based
+        document.getElementById('update-form').style.display = 'block'; // Show update form
     };
 
     return (
@@ -54,14 +67,17 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                     {Array.isArray(airlines) && airlines.map((airline, index) => (
                         <tr key={index}>
                             <td className="table-data">
-                                <img src={airline.logo_url} alt={`${airline.name} logo`} className="airline-logo" />
+                                <img src={airline.logo_url} alt={`${airline.name}`} className="airline-logo" />
                             </td>
                             <td className="table-data">{airline.name}</td>
                             <td className="table-data">{airline.code}</td>
                             <td className="table-data">
-                                <Link href={`/airlines/edit/${airline.id}`} className="bg-green-500 rounded-md text-sm px-2 py-1 text-white">
+                                <button
+                                    onClick={() => handleEdit(airline)}
+                                    className="bg-green-500 rounded-md text-sm px-2 py-1 text-white mr-2"
+                                >
                                     Update
-                                </Link>
+                                </button>
                                 <button
                                     onClick={() => handleDelete(airline.id)}
                                     className="bg-red-500 rounded-md text-sm px-2 py-1 text-white"
@@ -74,7 +90,7 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                 </tbody>
             </table>
 
-            {/* Create Button */}
+            {/* Create Button (Unchanged) */}
             <div className="button-container">
                 <button
                     className="button"
@@ -84,10 +100,10 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                 </button>
             </div>
 
-            {/* Form for Creating New Airline */}
+            {/* Form for Creating New Airline (Unchanged) */}
             <div id="create-form" className="form-container">
                 <h3 className="form-title">Create Airline</h3>
-                <form onSubmit={handleSubmit} className="form">
+                <form onSubmit={(e) => { e.preventDefault(); post('/airlines', new FormData(e.target)); }} className="form">
                     <div className="form-group">
                         <label className="label">Name: </label>
                         <input
@@ -129,6 +145,54 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                         disabled={processing}
                     >
                         {processing ? 'Creating...' : 'Create'}
+                    </button>
+                </form>
+            </div>
+
+            {/* Form for Updating Existing Airline */}
+            <div id="update-form" className="form-container" style={{ display: 'none' }}>
+                <h3 className="form-title">Update Airline</h3>
+                <form onSubmit={handleSubmit} className="form">
+                    <div className="form-group">
+                        <label className="label">Name: </label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={data.name}
+                            onChange={handleChange}
+                            required
+                            className="input"
+                        />
+                        {errors.name && <span className="error">{errors.name}</span>}
+                    </div>
+                    <div className="form-group">
+                        <label className="label">Code: </label>
+                        <input
+                            type="text"
+                            name="code"
+                            value={data.code}
+                            onChange={handleChange}
+                            required
+                            className="input"
+                        />
+                        {errors.code && <span className="error">{errors.code}</span>}
+                    </div>
+                    <div className="form-group">
+                        <label className="label">Logo: </label>
+                        <input
+                            type="file"
+                            name="logo"
+                            onChange={handleChange}
+                            className="input"
+                        />
+                        {errors.logo && <span className="error">{errors.logo}</span>}
+                    </div>
+                    <button
+                        type="submit"
+                        className="submit-button"
+                        disabled={processing}
+                    >
+                        {processing ? 'Updating...' : 'Update'}
                     </button>
                 </form>
             </div>

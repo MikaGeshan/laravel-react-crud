@@ -23,42 +23,34 @@ export default function Tickets() {
     return (
         <div className="tickets-container">
             <h1>Flight Tickets</h1>
-            <div className="ticket-list">
-                {tickets.data.map((ticket, index) => (
-                    <div key={index} className="ticket-card">
-                        <div className="ticket-header">
-                            <div className="ticket-destination">
-                                <div className="ticket-city">{ticket.origin}</div>
-                                <div className="ticket-arrow">✈</div>
-                                <div className="ticket-city">{ticket.destination}</div>
-                            </div>
-                        </div>
-                        <div className="ticket-body">
-                            <div className="ticket-info">
-                                <p><strong>Passenger</strong><br />{ticket.passenger_name}</p>
-                                <p><strong>Flight</strong><br />{ticket.flight_number}</p>
-                            </div>
-                            <div className="ticket-info">
-                                <p><strong>Seat Class</strong><br />{ticket.seat_class}</p>
-                            </div>
-                            <div className="ticket-info">
-                                <p><strong>Date</strong><br />{format(new Date(ticket.departure_date), 'dd MMM yyyy')}</p>
-                                <p><strong>Time</strong><br />{ticket.departure_time}</p>
-
-                            </div>
-                        </div>
-                        <div className="ticket-footer">
-                            <div className="ticket-barcode"></div>
-                            <button
-                                className="delete-button"
-                                onClick={() => handleDelete(ticket.id)}
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                ))}
-            </div>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>Passenger Name</th>
+                        <th>Flight Number</th>
+                        <th>Destination</th>
+                        <th>Seat Class</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {tickets.data.map((ticket, index) => (
+                        <tr key={index}>
+                            <td>{ticket.passenger_name}</td>
+                            <td>{ticket.flight_number}</td>
+                            <td>{ticket.destination}</td>
+                            <td>{ticket.seat_class}</td>
+                            <td>{format(new Date(ticket.departure_date), 'dd MMM yyyy')}</td>
+                            <td>{ticket.departure_time}</td>
+                            <td>
+                                <button className="btn btn-delete" onClick={() => handleDelete(ticket.id)}>Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

@@ -2,7 +2,7 @@ import { Head, Link, usePage } from "@inertiajs/react";
 import { useRoute } from "./../../../vendor/tightenco/ziggy/src/js/index";
 import { useState, useEffect } from "react";
 
-function Home({ posts }) {
+function Home({ airlines = [] }) { // Inisialisasi airlines dengan array kosong
     const route = useRoute();
     const { flash } = usePage().props;
     const { component } = usePage();
@@ -62,8 +62,8 @@ function Home({ posts }) {
                 </div>
                 <div className="bg-pink-500 text-white p-4 rounded-lg shadow-md">
                     <h2 className="text-xl font-bold">Airlines</h2>
-                    <p className="text-2xl">43</p>
-                    <Link href="#" className="text-white underline">
+                    <p className="text-2xl">{airlines.length}</p>
+                    <Link href={route('airlines.index')} className="text-white underline">
                         More info
                     </Link>
                 </div>
