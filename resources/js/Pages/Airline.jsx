@@ -3,7 +3,8 @@ import { useForm, Link } from '@inertiajs/react'; // Import Link for navigation 
 
 export default function Airline({ airlines: initialAirlines, flash }) {
     const [airlines, setAirlines] = useState(initialAirlines || []);
-    const [editingAirline, setEditingAirline] = useState(null); // State to track the airline being edited
+    const [editingAirline, setEditingAirline] = useState(null);
+    const [showForm, setShowForm] = useState(false);
     const { data, setData, post, put, processing, errors, reset, delete: destroy } = useForm({
         name: '',
         code: '',
@@ -42,11 +43,17 @@ export default function Airline({ airlines: initialAirlines, flash }) {
     };
 
     const handleEdit = (airline) => {
-        setEditingAirline(airline); // Set the airline to be edited
+        setEditingAirline(airline);
         setData('name', airline.name);
         setData('code', airline.code);
-        setData('logo', ''); // Reset logo input as it's file-based
-        document.getElementById('update-form').style.display = 'block'; // Show update form
+        setData('logo', '');
+        const updateForm = document.getElementById('update-form');
+        updateForm.style.display = updateForm.style.display === 'block' ? 'none' : 'block'; // Toggle update form
+    };
+
+    const toggleCreateForm = () => {
+        const createForm = document.getElementById('create-form');
+        createForm.style.display = createForm.style.display === 'block' ? 'none' : 'block';
     };
 
     return (
@@ -90,13 +97,13 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                 </tbody>
             </table>
 
-            {/* Create Button (Unchanged) */}
+            {/* Create Button*/}
             <div className="button-container">
                 <button
                     className="button"
-                    onClick={() => document.getElementById('create-form').style.display = 'block'}
+                    onClick={toggleCreateForm}
                 >
-                    Create New Airline
+                Add New Airline
                 </button>
             </div>
 

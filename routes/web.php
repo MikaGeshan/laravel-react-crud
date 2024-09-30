@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\AirlineController;
+use App\Http\Controllers\AirportController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -69,6 +70,4 @@ Route::post('/airlines', [AirlineController::class, 'store']);
 Route::delete('/airlines/{airline}', [AirlineController::class, 'destroy'])->name('airlines.destroy');
 
 // Route untuk menampilkan halaman airports
-Route::get('/airports', function () {
-    return Inertia::render('Airports');
-})->name('airports');
+Route::resource('airports', AirportController::class)->except(['show']);
