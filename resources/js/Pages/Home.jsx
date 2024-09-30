@@ -11,7 +11,7 @@ function Home({ airlines = [] }) { // Inisialisasi airlines dengan array kosong
     useEffect(() => {
         const timer = setTimeout(() => {
             setFlashMsg(null);
-        }, 5000); // Hilang setelah 5 detik
+        }, 5000);
 
         return () => clearTimeout(timer);
     }, [flashMsg]);
@@ -62,7 +62,7 @@ function Home({ airlines = [] }) { // Inisialisasi airlines dengan array kosong
                 </div>
                 <div className="bg-pink-500 text-white p-4 rounded-lg shadow-md">
                     <h2 className="text-xl font-bold">Airlines</h2>
-                    <p className="text-2xl">{airlines.length}</p>
+                    <p className="text-2xl">0</p>
                     <Link href={route('airlines.index')} className="text-white underline">
                         More info
                     </Link>

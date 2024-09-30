@@ -45,7 +45,7 @@ export default function Sidebar() {
                             <ul className="ml-8 mt-2 space-y-2">
                                 <li>
                                     <Link
-                                        href="/flights"
+                                        href="#"
                                         className="block p-2 rounded hover:bg-gray-700"
                                     >
                                         Flight Schedule

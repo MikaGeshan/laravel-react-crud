@@ -3,7 +3,7 @@ import { usePage, router } from '@inertiajs/react';
 import { format } from 'date-fns';
 
 export default function Tickets() {
-    const { tickets } = usePage().props; // Get tickets from props
+    const { tickets } = usePage().props;
 
     // Function to handle ticket deletion
     const handleDelete = (id) => {
@@ -14,11 +14,6 @@ export default function Tickets() {
             });
         }
     };
-
-    // Check if tickets exist
-    if (!tickets || !tickets.data) {
-        return <div>Loading tickets...</div>;
-    }
 
     return (
         <div className="tickets-container">
@@ -45,6 +40,7 @@ export default function Tickets() {
                             <td>{format(new Date(ticket.departure_date), 'dd MMM yyyy')}</td>
                             <td>{ticket.departure_time}</td>
                             <td>
+                                <button className="btn btn-edit">Update</button>
                                 <button className="btn btn-delete" onClick={() => handleDelete(ticket.id)}>Delete</button>
                             </td>
                         </tr>

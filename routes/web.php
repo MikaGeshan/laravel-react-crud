@@ -46,9 +46,6 @@ Route::post('/signup', [AuthController::class, 'signup']);
 
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-Route::get('/flights', function () {
-    return Inertia::render('Flights');
-})->name('flights');
 
 Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
 
