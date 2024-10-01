@@ -19,8 +19,10 @@ class Ticket extends Model
         'passenger_name',
         'departure_date',
         'departure_time',
+        'departure_location', // Added departure_location here
         'destination',
         'seat_class',
+        'seat', // Add the seat attribute here
         'price',
     ];
 

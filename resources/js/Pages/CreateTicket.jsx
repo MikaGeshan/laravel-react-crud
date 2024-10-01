@@ -4,11 +4,12 @@ import { useForm } from '@inertiajs/react';
 export default function CreateTicket() {
     const { data, setData, post, processing, errors } = useForm({
         passenger_name: '',
+        departure_location: '', // Added departure_location
         departure_date: '',
         departure_time: '',
         destination: '',
         seat_class: 'economy',
-        price: ''
+        price: '',
     });
 
     const handleChange = (e) => {
@@ -20,146 +21,128 @@ export default function CreateTicket() {
         post('/tickets');
     };
 
-    const formStyle = {
-        container: {
-            maxWidth: '600px',
-            margin: '50px auto',
-            padding: '20px',
-            border: '1px solid #ddd',
-            borderRadius: '8px',
-            backgroundColor: '#f9f9f9',
-        },
-        formGroup: {
-            marginBottom: '15px',
-        },
-        label: {
-            display: 'block',
-            marginBottom: '5px',
-            fontWeight: 'bold',
-        },
-        input: {
-            width: '100%',
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-        },
-        select: {
-            width: '100%',
-            padding: '8px',
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-        },
-        error: {
-            color: 'red',
-            fontSize: '12px',
-            marginTop: '5px',
-        },
-        button: {
-            padding: '10px 20px',
-            backgroundColor: '#007bff',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-        },
-        buttonDisabled: {
-            backgroundColor: '#ccc',
-        },
-    };
-
     return (
-        <div style={formStyle.container}>
-            <h1>Create Airplane Ticket</h1>
+        <div className="max-w-lg mx-auto mt-12 p-6 border border-gray-300 rounded-lg bg-gray-100">
+            <h1 className="text-2xl font-bold mb-6">Create Airplane Ticket</h1>
             <form onSubmit={handleSubmit}>
                 {/* Passenger Name */}
-                <div style={formStyle.formGroup}>
-                    <label style={formStyle.label}>Passenger Name</label>
+                <div className="mb-4">
+                    <label className="block font-bold mb-1">Passenger Name</label>
                     <input
                         type="text"
                         name="passenger_name"
                         value={data.passenger_name}
                         onChange={handleChange}
                         placeholder="Enter passenger name"
-                        style={formStyle.input}
+                        className="w-full p-2 border border-gray-300 rounded"
                     />
-                    {errors.passenger_name && <span style={formStyle.error}>{errors.passenger_name}</span>}
+                    {errors.passenger_name && (
+                        <span className="text-red-500 text-sm">{errors.passenger_name}</span>
+                    )}
+                </div>
+
+                {/* Departure Location */}
+                <div className="mb-4">
+                    <label className="block font-bold mb-1">Departure Location</label>
+                    <input
+                        type="text"
+                        name="departure_location" // Added departure_location field
+                        value={data.departure_location}
+                        onChange={handleChange}
+                        placeholder="Enter departure location"
+                        className="w-full p-2 border border-gray-300 rounded"
+                    />
+                    {errors.departure_location && (
+                        <span className="text-red-500 text-sm">{errors.departure_location}</span>
+                    )}
                 </div>
 
                 {/* Departure Date */}
-                <div style={formStyle.formGroup}>
-                    <label style={formStyle.label}>Departure Date</label>
+                <div className="mb-4">
+                    <label className="block font-bold mb-1">Departure Date</label>
                     <input
                         type="date"
                         name="departure_date"
                         value={data.departure_date}
                         onChange={handleChange}
-                        style={formStyle.input}
+                        className="w-full p-2 border border-gray-300 rounded"
                     />
-                    {errors.departure_date && <span style={formStyle.error}>{errors.departure_date}</span>}
+                    {errors.departure_date && (
+                        <span className="text-red-500 text-sm">{errors.departure_date}</span>
+                    )}
                 </div>
 
                 {/* Departure Time */}
-                <div style={formStyle.formGroup}>
-                    <label style={formStyle.label}>Departure Time</label>
+                <div className="mb-4">
+                    <label className="block font-bold mb-1">Departure Time</label>
                     <input
                         type="time"
                         name="departure_time"
                         value={data.departure_time}
                         onChange={handleChange}
-                        style={formStyle.input}
+                        className="w-full p-2 border border-gray-300 rounded"
                     />
-                    {errors.departure_time && <span style={formStyle.error}>{errors.departure_time}</span>}
+                    {errors.departure_time && (
+                        <span className="text-red-500 text-sm">{errors.departure_time}</span>
+                    )}
                 </div>
 
                 {/* Destination */}
-                <div style={formStyle.formGroup}>
-                    <label style={formStyle.label}>Destination</label>
+                <div className="mb-4">
+                    <label className="block font-bold mb-1">Destination</label>
                     <input
                         type="text"
                         name="destination"
                         value={data.destination}
                         onChange={handleChange}
                         placeholder="Enter destination"
-                        style={formStyle.input}
+                        className="w-full p-2 border border-gray-300 rounded"
                     />
-                    {errors.destination && <span style={formStyle.error}>{errors.destination}</span>}
+                    {errors.destination && (
+                        <span className="text-red-500 text-sm">{errors.destination}</span>
+                    )}
                 </div>
 
                 {/* Seat Class */}
-                <div style={formStyle.formGroup}>
-                    <label style={formStyle.label}>Seat Class</label>
+                <div className="mb-4">
+                    <label className="block font-bold mb-1">Seat Class</label>
                     <select
                         name="seat_class"
                         value={data.seat_class}
                         onChange={handleChange}
-                        style={formStyle.select}
+                        className="w-full p-2 border border-gray-300 rounded"
                     >
                         <option value="economy">Economy</option>
                         <option value="business">Business</option>
                         <option value="first">First Class</option>
                     </select>
-                    {errors.seat_class && <span style={formStyle.error}>{errors.seat_class}</span>}
+                    {errors.seat_class && (
+                        <span className="text-red-500 text-sm">{errors.seat_class}</span>
+                    )}
                 </div>
 
                 {/* Price */}
-                <div style={formStyle.formGroup}>
-                    <label style={formStyle.label}>Price</label>
+                <div className="mb-4">
+                    <label className="block font-bold mb-1">Price</label>
                     <input
                         type="number"
                         name="price"
                         value={data.price}
                         onChange={handleChange}
                         placeholder="Enter price"
-                        style={formStyle.input}
+                        className="w-full p-2 border border-gray-300 rounded"
                     />
-                    {errors.price && <span style={formStyle.error}>{errors.price}</span>}
+                    {errors.price && (
+                        <span className="text-red-500 text-sm">{errors.price}</span>
+                    )}
                 </div>
 
                 {/* Submit Button */}
-                <div style={formStyle.formGroup}>
+                <div>
                     <button
                         type="submit"
-                        style={{ ...formStyle.button, ...(processing ? formStyle.buttonDisabled : {}) }}
+                        className={`w-full p-3 bg-blue-500 text-white font-bold rounded hover:bg-blue-600 transition duration-200 ${processing ? 'opacity-50 cursor-not-allowed' : ''
+                            }`}
                         disabled={processing}
                     >
                         {processing ? 'Creating...' : 'Create Ticket'}

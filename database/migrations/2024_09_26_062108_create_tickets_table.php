@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('passenger_name');
             $table->date('departure_date');
             $table->time('departure_time');
+            $table->string('departure_location'); // Added departure_location field
             $table->string('destination');
             $table->string('seat_class');
+            $table->integer('seat'); // Add the seat column as an integer
             $table->decimal('price', 8, 2); // 8 digits in total, 2 after the decimal point
             $table->timestamps();
         });

@@ -17,14 +17,15 @@ export default function Tickets() {
 
     return (
         <div className="tickets-container">
-            <h1>Flight Tickets</h1>
             <table className="table">
                 <thead>
                     <tr>
                         <th>Passenger Name</th>
                         <th>Flight Number</th>
+                        <th>Departure Location</th> {/* Added Departure Location */}
                         <th>Destination</th>
                         <th>Seat Class</th>
+                        <th>Seat</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Actions</th>
@@ -35,11 +36,14 @@ export default function Tickets() {
                         <tr key={index}>
                             <td>{ticket.passenger_name}</td>
                             <td>{ticket.flight_number}</td>
+                            <td>{ticket.departure_location}</td>
                             <td>{ticket.destination}</td>
                             <td>{ticket.seat_class}</td>
+                            <td>{ticket.seat}</td>
                             <td>{format(new Date(ticket.departure_date), 'dd MMM yyyy')}</td>
                             <td>{ticket.departure_time}</td>
                             <td>
+                                <button className="btn btn-view" onClick={() => router.visit(`/tickets/${ticket.id}`)}>View</button>
                                 <button className="btn btn-edit">Update</button>
                                 <button className="btn btn-delete" onClick={() => handleDelete(ticket.id)}>Delete</button>
                             </td>

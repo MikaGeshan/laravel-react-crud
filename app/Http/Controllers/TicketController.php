@@ -32,18 +32,20 @@ class TicketController extends Controller
     {
         sleep(2); // Optional: Simulate processing time
 
-        // Validate airplane ticket data
+        // Validate airplane ticket data, including departure_location
         $fields = $request->validate([
             'passenger_name' => ['required', 'string', 'max:255'], // Passenger name
             'departure_date' => ['required', 'date'], // Departure date
             'departure_time' => ['required', 'date_format:H:i'], // Departure time (HH:MM format)
+            'departure_location' => ['required', 'string', 'max:255'], // Departure location
             'destination' => ['required', 'string', 'max:255'], // Destination
             'seat_class' => ['required', 'in:economy,business,first'], // Seat class
             'price' => ['required', 'numeric', 'min:0'], // Price must be a valid number and not negative
         ]);
 
-        // Generate a random flight number
+        // Generate a random flight number and seat number
         $fields['flight_number'] = $this->generateFlightNumber();
+        $fields['seat'] = $this->generateSeatNumber(); // Add generated seat number
 
         try {
             // Create a new airplane ticket
@@ -61,7 +63,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        return Inertia::render('Tickets/Show', ['ticket' => $ticket]);
+        return Inertia::render('ViewTicket', ['ticket' => $ticket]);
     }
 
     /**
@@ -79,14 +81,15 @@ class TicketController extends Controller
     {
         sleep(1); // Optional: Simulate processing time
 
-        // Validate airplane ticket data
+        // Validate airplane ticket data, including departure_location
         $fields = $request->validate([
             'flight_number' => ['required', 'string', 'max:10'],
             'passenger_name' => ['required', 'string', 'max:255'],
             'departure_date' => ['required', 'date'],
             'departure_time' => ['required', 'date_format:H:i'], // Departure time (HH:MM format)
+            'departure_location' => ['required', 'string', 'max:255'], // Departure location
             'destination' => ['required', 'string', 'max:255'], // Destination
-            'seat_class' => ['required', 'in:economy,business,first_class'],
+            'seat_class' => ['required', 'in:economy,business,first'],
             'price' => ['required', 'numeric', 'min:0'], // Price must be a valid number
         ]);
 
@@ -120,5 +123,13 @@ class TicketController extends Controller
         $prefix = 'FL';
         $number = mt_rand(1000, 9999); // Generate a random number between 1000 and 9999
         return $prefix . $number;
+    }
+
+    /**
+     * Generate a random seat number between 1 and 1000.
+     */
+    private function generateSeatNumber()
+    {
+        return mt_rand(1, 1000); // Randomly generate a seat number between 1 and 1000
     }
 }

@@ -61,7 +61,6 @@ export default function Airports({ airports: initialAirports }) {
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Airports</h1>
-
             {/* Table */}
             <div className="overflow-x-auto">
                 <table className="min-w-full border border-gray-200 bg-blue-900">
@@ -82,13 +81,13 @@ export default function Airports({ airports: initialAirports }) {
                                 <td className="py-2 px-4 border-b">
                                     <button
                                         onClick={() => handleEdit(airport)}
-                                        className="mr-2 py-1 px-3 bg-green-500 text-white font-semibold rounded hover:bg-yellow-500 transition duration-300"
+                                        className="mr-2 mt-2     py-1 px-3 bg-green-500 text-white font-semibold rounded hover:bg-yellow-500 transition duration-300"
                                     >
                                         Update
                                     </button>
                                     <button
                                         onClick={() => handleDelete(airport.id)}
-                                        className="py-1 px-3 bg-red-400 text-white font-semibold rounded hover:bg-red-500 transition duration-300"
+                                        className="mr-2 mt-2 py-1 px-3 bg-red-400 text-white font-semibold rounded hover:bg-red-500 transition duration-300"
                                     >
                                         Delete
                                     </button>

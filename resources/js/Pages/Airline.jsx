@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useForm, Link } from '@inertiajs/react'; // Import Link for navigation and routing
 
 export default function Airline({ airlines: initialAirlines, flash }) {
-    const [airlines, setAirlines] = useState(initialAirlines || []);
+    const [airlines] = useState(initialAirlines || []);
     const [editingAirline, setEditingAirline] = useState(null);
-    const [showForm, setShowForm] = useState(false);
     const { data, setData, post, put, processing, errors, reset, delete: destroy } = useForm({
         name: '',
         code: '',
@@ -103,7 +102,7 @@ export default function Airline({ airlines: initialAirlines, flash }) {
                     className="button"
                     onClick={toggleCreateForm}
                 >
-                Add New Airline
+                    Add New Airline
                 </button>
             </div>
 

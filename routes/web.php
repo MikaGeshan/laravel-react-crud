@@ -58,6 +58,9 @@ Route::post('/tickets', [TicketController::class, 'store'])->name('tickets.store
 // Rute untuk menghapus tiket
 Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
 
+// Rute untuk melihat tiket
+Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+
 
 // Rute resource untuk AirlineController
 Route::resource('airlines', AirlineController::class);
@@ -65,6 +68,7 @@ Route::post('/airlines', [AirlineController::class, 'store']);
 
 // Route untuk menghapus airline
 Route::delete('/airlines/{airline}', [AirlineController::class, 'destroy'])->name('airlines.destroy');
+
 
 // Route untuk menampilkan halaman airports
 Route::resource('airports', AirportController::class)->except(['show']);
