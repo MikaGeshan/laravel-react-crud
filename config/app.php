@@ -2,6 +2,11 @@
 
 return [
 
+    // Spatie Provider
+    'providers' => [
+        Spatie\Permission\PermissionServiceProvider::class,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -104,6 +109,7 @@ return [
             explode(',', env('APP_PREVIOUS_KEYS', ''))
         ),
     ],
+
 
     /*
     |--------------------------------------------------------------------------
